@@ -13,7 +13,7 @@ def post_deital(request, pk):
     return render(request, 'blog/post_deital.html', {'post': post})
 
 def post_new(request):
-    form = PostForm(request.POST)
+    form = PostForm(request.POST, request.FILES)
     if request.method == "POST":
         post = form.save(commit=False)
         post.author = request.user
@@ -27,7 +27,7 @@ def post_new(request):
 def post_edit(request, pk):
     post = get_object_or_404(Post, pk=pk)
     if request.method == "POST":
-        form = PostForm(request.POST, instance=post)
+        form = PostForm(request.POST, request.FILES, instance=post)
         if form.is_valid():
             post = form.save(commit=False)
             post.author = request.user
